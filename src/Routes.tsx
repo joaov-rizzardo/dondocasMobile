@@ -2,18 +2,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import {createDrawerNavigator} from "@react-navigation/drawer"
 import Home from "./views/Home";
 import Sale from "./views/Sale";
-import { Text } from "react-native";
+import { mainColor } from "./configs/Colors";
 
 const Drawer = createDrawerNavigator()
 
 const drawerStyle = {
-    backgroundColor: "#7e1037",
+    backgroundColor: mainColor,
     width: "80%"
 }
 
 const headerOptions = {
     headerStyle: {
-        backgroundColor: "#7e1037"
+        backgroundColor: mainColor
     },
     headerTitleStyle: {
         color: "#fff"
@@ -49,4 +49,4 @@ export default () => {
             </Drawer.Navigator>
         </NavigationContainer>
     )
-}
+} 
