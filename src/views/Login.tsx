@@ -1,23 +1,24 @@
-import { useState } from "react"
-import { View, StyleSheet, TextInput, Button, Image } from "react-native"
+import { useContext, useState } from "react"
+import { View, StyleSheet, TextInput, Button, Image, Text} from "react-native"
 import { mainColor } from "../configs/Colors"
+import { AuthContext } from "../contexts/AuthContext"
 
-interface Login {
+type Login = {
     username: string
     password: string
 }
 
 export default () => {
+    
+    const {handleLogin} = useContext(AuthContext)
+
+    const [hasError, handleHasError] = useState<boolean>(false)
 
     const [login, setLogin] = useState<Login>({
         username: "",
         password: ""
     })
-
-    async function handleLogin(){
-        console.log(login)
-    }
-
+    
     return (
         <View style={styles.main}>
             <View style={styles.container}>
@@ -36,10 +37,15 @@ export default () => {
                 />
                 <View style={styles.button}>
                     <Button 
-                        onPress={handleLogin}
+                        onPress={e => handleLogin(login.username, login.password).then(status => {
+                            status === false ? handleHasError(true) : false
+                        })}
                         color={mainColor} 
                         title="Entrar"/>
                 </View>
+
+                {hasError === true && <Text style={{color: mainColor}}>Usuário e/ou senha inválidos</Text>}
+                
             </View>
         </View>
     )
@@ -47,7 +53,8 @@ export default () => {
 
 const styles = StyleSheet.create({
     main: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#eaeff1"
     },
     container: {
         width: "100%",

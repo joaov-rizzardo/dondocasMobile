@@ -7,13 +7,13 @@ interface Props {
 }
 
 interface ContextType {
-    authenticated?: boolean
-    handleLogin?: (identification: string, password: string) => void,
-    handleLogout?: () => void
-    user?: User
+    authenticated: boolean
+    handleLogin: (identification: string, password: string) => Promise<boolean>,
+    handleLogout: () => Promise<void>
+    user: User | undefined
 }
 
-const AuthContext = createContext<ContextType>({})
+const AuthContext = createContext({} as ContextType)
 
 function AuthProvider({children}: Props){
 
@@ -24,7 +24,6 @@ function AuthProvider({children}: Props){
             {children}
         </AuthContext.Provider>
     )
-    
 }
 
 export {AuthContext, AuthProvider}

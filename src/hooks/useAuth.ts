@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import backendApi from "../services/backendApi";
@@ -47,10 +46,11 @@ export default function useAuth(){
                     handleUnauthenticated()
                     return false
                 }
- 
+
                 const {data: {authenticated, user, token}} = await backendApi.post<AuthenticateResponse>('user/authenticate', {
                     token: JSON.parse(storagedToken)
                 })
+                
 
                 if(authenticated === true){
                     handleAuthenticated(token, user)
@@ -69,9 +69,10 @@ export default function useAuth(){
         handleVerifyToken()
     }, [])
 
-    async function handleLogin(identification: string, password: string){
+    async function handleLogin(identification: string, password: string): Promise<boolean>{
+
         try{
-            const {data: {authenticated, user, token}} = await backendApi.post<AuthenticateResponse>('user/authenticate', {
+            const {data: {authenticated, user, token}} = await backendApi.post<AuthenticateResponse>('/user/authenticate', {
                identification: identification,
                password: password
             })
@@ -81,6 +82,7 @@ export default function useAuth(){
                 return true
             }
 
+            return false
             handleUnauthenticated()
 
         }catch(error){

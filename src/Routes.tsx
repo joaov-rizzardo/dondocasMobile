@@ -3,6 +3,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer"
 import Home from "./views/Home";
 import Sale from "./views/Sale";
 import { mainColor } from "./configs/Colors";
+import Logout from "./views/Logout";
 
 const Drawer = createDrawerNavigator()
 
@@ -19,6 +20,7 @@ const headerOptions = {
         color: "#fff"
     }
 }
+
 export default () => {
     return (
         <NavigationContainer>
@@ -45,6 +47,11 @@ export default () => {
                     name="Vendas" 
                     component={Sale} 
                     options={{title: "Vendas", ...headerOptions}}
+                />
+                <Drawer.Screen 
+                    name="Logout"
+                    component={Logout} 
+                    options={{title: "Sair", ...headerOptions}}
                 />
             </Drawer.Navigator>
         </NavigationContainer>
