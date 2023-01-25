@@ -49,7 +49,7 @@ export default () => {
                     options={{title: "Vendas", ...headerOptions}}
                 />
                 <Drawer.Screen 
-                    name="Logout"
+                    name="Sair"
                     component={Logout} 
                     options={{title: "Sair", ...headerOptions}}
                 />

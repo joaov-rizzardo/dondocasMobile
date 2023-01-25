@@ -1,7 +1,8 @@
 import { useContext, useState } from "react"
-import { View, StyleSheet, TextInput, Button, Image, Text} from "react-native"
+import { View, StyleSheet, TextInput, Button, Image, Text, TouchableOpacity} from "react-native"
 import { mainColor } from "../configs/Colors"
 import { AuthContext } from "../contexts/AuthContext"
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 type Login = {
     username: string
@@ -20,28 +21,42 @@ export default () => {
     })
     
     return (
-        <View style={styles.main}>
-            <View style={styles.container}>
-                <Image style={styles.image} source={require('../assets/logo.png')}/>
-                <TextInput 
-                    placeholder="Usuário" 
-                    style={styles.input}
-                    onChangeText={text => setLogin({...login, username: text})}
-                />
+        <View style={styles.container}>
 
-                <TextInput 
-                    placeholder="Senha" 
-                    secureTextEntry={true} 
-                    style={styles.input}
-                    onChangeText={text => setLogin({...login, password: text})}
-                />
+            <View style={styles.header}>
+                <Image source={require('../assets/logo.png')} />
+            </View>
+
+            <View style={styles.main}>
+
+                <Icon name="user" color={mainColor} size={130}/>
+
+                <View style={{marginTop: 20, ...styles.inputView}}>
+                    <Icon name="user" color={mainColor} size={20} />
+                    <TextInput 
+                        placeholder="Usuário" 
+                        onChangeText={text => setLogin({...login, username: text})}
+                        style={styles.inputView.input}
+                    />
+                </View>
+                
+
+                <View style={styles.inputView}>
+                    <Icon name="lock" color={mainColor} size={20} />
+                    <TextInput 
+                        placeholder="Senha" 
+                        onChangeText={text => setLogin({...login, password: text})}
+                        secureTextEntry={true} 
+                        style={styles.inputView.input}
+                    />
+                </View>
+
                 <View style={styles.button}>
-                    <Button 
+                    <TouchableOpacity  
                         onPress={e => handleLogin(login.username, login.password).then(status => {
                             status === false ? handleHasError(true) : false
                         })}
-                        color={mainColor} 
-                        title="Entrar"/>
+                        style={styles.button}><Text style={{color: '#fff'}}>Entrar</Text></TouchableOpacity>
                 </View>
 
                 {hasError === true && <Text style={{color: mainColor}}>Usuário e/ou senha inválidos</Text>}
@@ -52,28 +67,50 @@ export default () => {
 } 
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        backgroundColor: "#eaeff1"
-    },
     container: {
+        flex: 1,
+        backgroundColor: mainColor
+    },
+    main: {
         width: "100%",
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        paddingTop: 60,
+        alignItems: "center",
+        borderTopRightRadius: 70,
+        borderTopLeftRadius: 70,
+        backgroundColor: '#eaeff1'
     },
-    input: {
+    header: {
+        flex: 0.4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        title: {
+            color: '#eaeff1',
+            fontSize: 30
+        }
+    },
+    inputView: {
+        flexDirection: "row",
         borderWidth: 1,
         borderColor: mainColor,
+        alignItems: "center",
         width: "75%",
         height: 40,
         marginBottom: 10,
-        borderRadius: 10,
-        padding: 10
+        borderRadius: 20,
+        padding: 10,
+        input: {
+            width: "100%",
+            marginLeft: 10
+        }
     },
     button: {
         width: "75%", 
-        height: 40
+        height: 40,
+        backgroundColor: mainColor,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     image: {
         width: "75%",
