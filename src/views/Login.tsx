@@ -3,6 +3,8 @@ import { View, StyleSheet, TextInput, Button, Image, Text, TouchableOpacity} fro
 import { mainColor } from "../configs/Colors"
 import { AuthContext } from "../contexts/AuthContext"
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IconInput from "../components/IconInput"
+import LoadingButton from "../components/LoadingButton"
 
 type Login = {
     username: string
@@ -14,6 +16,7 @@ export default () => {
     const {handleLogin} = useContext(AuthContext)
 
     const [hasError, handleHasError] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [login, setLogin] = useState<Login>({
         username: "",
@@ -24,40 +27,46 @@ export default () => {
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <Image source={require('../assets/logo.png')} />
+                <Image style={styles.image} source={require('../assets/logo.png')} />
             </View>
 
             <View style={styles.main}>
 
                 <Icon name="user" color={mainColor} size={130}/>
 
-                <View style={{marginTop: 20, ...styles.inputView}}>
-                    <Icon name="user" color={mainColor} size={20} />
-                    <TextInput 
-                        placeholder="Usuário" 
-                        onChangeText={text => setLogin({...login, username: text})}
-                        style={styles.inputView.input}
-                    />
-                </View>
+                <IconInput
+                    value={login.username}
+                    changeFunction={text => setLogin({...login, username: text})}
+                    color={mainColor} 
+                    icon="user" 
+                    placeholder="Usuário" 
+                    width="75%"
+                />
                 
+                <IconInput
+                    value={login.password}
+                    changeFunction={text => setLogin({...login, password: text})}
+                    color={mainColor} 
+                    icon="lock" 
+                    placeholder="Senha" 
+                    width="75%"
+                    secureTextEntry={true}
+                />
 
-                <View style={styles.inputView}>
-                    <Icon name="lock" color={mainColor} size={20} />
-                    <TextInput 
-                        placeholder="Senha" 
-                        onChangeText={text => setLogin({...login, password: text})}
-                        secureTextEntry={true} 
-                        style={styles.inputView.input}
-                    />
-                </View>
-
-                <View style={styles.button}>
-                    <TouchableOpacity  
-                        onPress={e => handleLogin(login.username, login.password).then(status => {
+                <LoadingButton 
+                    text="Entrar"
+                    fontColor="#fff"
+                    backgroundColor={mainColor}
+                    width="75%"
+                    isLoading={isLoading}
+                    pressFunction={e => {
+                        setIsLoading(true)
+                        handleLogin(login.username, login.password).then(status => {
                             status === false ? handleHasError(true) : false
-                        })}
-                        style={styles.button}><Text style={{color: '#fff'}}>Entrar</Text></TouchableOpacity>
-                </View>
+                            setIsLoading(false)
+                        })
+                    }}
+                />
 
                 {hasError === true && <Text style={{color: mainColor}}>Usuário e/ou senha inválidos</Text>}
                 
@@ -89,32 +98,8 @@ const styles = StyleSheet.create({
             fontSize: 30
         }
     },
-    inputView: {
-        flexDirection: "row",
-        borderWidth: 1,
-        borderColor: mainColor,
-        alignItems: "center",
-        width: "75%",
-        height: 40,
-        marginBottom: 10,
-        borderRadius: 20,
-        padding: 10,
-        input: {
-            width: "100%",
-            marginLeft: 10
-        }
-    },
-    button: {
-        width: "75%", 
-        height: 40,
-        backgroundColor: mainColor,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     image: {
-        width: "75%",
-        height: 200,
+        width: "60%",
         resizeMode: "contain"
     }
 })
