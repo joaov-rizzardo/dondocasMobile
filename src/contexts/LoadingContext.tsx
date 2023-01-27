@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useState } from "react";
-import ScreenLoader from "../components/ScreenLoader";
 
 type LoadingContextType = {
     loadings: {

@@ -9,7 +9,12 @@ export default () => {
 
   return (
     <LoadingProvider>
-      <ScreenLoader>
+      <ScreenLoader 
+        backgroundColor={mainColor} 
+        logoImage={require('./src/assets/logo.png')}
+        logoWidth={300}
+        logoHeight={300}
+      >
         <AuthProvider>
           <StatusBar backgroundColor={mainColor}/>
           <Content />
