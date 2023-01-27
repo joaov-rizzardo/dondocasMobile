@@ -1,35 +1,28 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import backendApi from "../services/backendApi";
-
-export interface User {
-    user_key?: number
-    user_identification?: string
-    user_name?: string
-    user_profile?: string
-    user_status?: "A" | "I"
-    profile_description?: string
-    profile_level?: number
-}
+import { UserType } from "../types/UserType";
 
 interface AuthenticateResponse {
     authenticated: boolean
-    user: User
+    user: UserType
     token: string
 }
 
 export default function useAuth(){
 
-    const [user, setUser] = useState<User>({})
+    const [user, setUser] = useState<UserType>({})
 
     const [authenticated, setAuthenticated] = useState<boolean>(false)
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     function handleUnauthenticated(){
         setAuthenticated(false)
         setUser({})
     }
 
-    function handleAuthenticated(token: string, user: User){
+    function handleAuthenticated(token: string, user: UserType){
         setAuthenticated(true)
         setUser(user)
         AsyncStorage.setItem('token', JSON.stringify(token))
@@ -65,8 +58,8 @@ export default function useAuth(){
                 return false
             }
         }
-
-        handleVerifyToken()
+        setLoading(true)
+        handleVerifyToken().then(() => setLoading(false))
     }, [])
 
     async function handleLogin(identification: string, password: string): Promise<boolean>{
@@ -82,9 +75,8 @@ export default function useAuth(){
                 return true
             }
 
-            return false
             handleUnauthenticated()
-
+            return false
         }catch(error){
             handleUnauthenticated()
             console.log(error)
@@ -97,5 +89,5 @@ export default function useAuth(){
         AsyncStorage.removeItem('token')
     }
     
-    return {handleLogin, handleLogout, user, authenticated}
+    return {handleLogin, handleLogout, user, authenticated, loading}
 }
