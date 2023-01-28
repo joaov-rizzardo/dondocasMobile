@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { View, StyleSheet, TextInput, Button, Image, Text, TouchableOpacity} from "react-native"
+import { View, StyleSheet, Image, Text} from "react-native"
 import { mainColor } from "../configs/Colors"
 import { AuthContext } from "../contexts/AuthContext"
 import Icon from 'react-native-vector-icons/FontAwesome'

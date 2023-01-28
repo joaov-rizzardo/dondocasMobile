@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useEffect, useRef, useState } from "react"
-import { Animated, StatusBar, View, StyleSheet, ImageSourcePropType } from "react-native"
+import { Animated, View, StyleSheet, ImageSourcePropType } from "react-native"
 import { LoadingContext } from "../contexts/LoadingContext"
 
 
