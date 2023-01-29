@@ -1,6 +1,8 @@
 import { Text, View, StyleSheet, Button, ScrollView} from "react-native"
 import ActionButton from "../components/ActionButton"
+import Balance from "../components/Balance"
 import HomeHeader from "../components/HomeHeader"
+import MovementRecord from "../components/MovementRecord"
 import { mainColor } from "../configs/Colors"
 
 export default () => {
@@ -12,7 +14,6 @@ export default () => {
                     style={{padding: 20,}} 
                     horizontal={true} 
                     showsHorizontalScrollIndicator={false} 
-                    snapToEnd={false}
                 >
                     <ActionButton icon="attach-money" text="Vendas" />
                     <ActionButton icon="shopping-cart" text="Despesas" />
@@ -20,9 +21,20 @@ export default () => {
                     <ActionButton icon="business-center" text="Fornecedor" />
                 </ScrollView>
             </View>
+            <ScrollView 
+                showsVerticalScrollIndicator={false} 
+            >   
+                <Balance title="Balanço Mensal:" balance={55.12} earnings={201.54} spending={155.79}/>
 
-            <View>
-            </View>
+                <View style={{padding: 16}}>
+                        <Text style={{fontSize: 20, color: mainColor}}>Ultimas Movimentações:</Text>
+                </View>
+
+                <MovementRecord type="E" date="28/01/2023 20:15:47" typeDescription="Venda" value={23.52}/>
+                <MovementRecord type="S" date="28/01/2023 21:15:47" typeDescription="Compra" value={45.93}/>
+                <MovementRecord type="S" date="28/01/2023 19:15:47" typeDescription="Compra" value={97.34}/>
+            </ScrollView>
+            
         </View>
     )
 }
