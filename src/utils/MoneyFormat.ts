@@ -1,3 +1,3 @@
 export default function MoneyFormat(number: number): string {
-    return `R$ ${number.toString().replace('.', ',')}`
+    return `R$ ${number.toFixed(2).toString().replace('.', ',')}`
 }

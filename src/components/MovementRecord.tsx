@@ -15,7 +15,7 @@ export default ({type, date, typeDescription, value}: Props) => (
             <Icon name={type === "E" ? "north" : "south"} size={30} color={type === "E" ? "green" : "red"}/>
         </View>
         
-        <View style={{flex: .9, justifyContent: 'space-between'}}>
+        <View style={{flex: .9}}>
             <Text><Text style={styles.highlightText}>Data:</Text> {date}</Text>
             <Text><Text style={styles.highlightText}>Tipo:</Text> {typeDescription}</Text>
             <Text><Text style={styles.highlightText}>Valor:</Text> {MoneyFormat(value)}</Text>
@@ -28,8 +28,7 @@ export default ({type, date, typeDescription, value}: Props) => (
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
+        padding: 16,
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
         flexDirection: 'row',

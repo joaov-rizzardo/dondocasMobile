@@ -4,6 +4,7 @@ import { CategoryType, SubcategoryType } from "../types/CategoryType";
 import { ColorType } from "../types/ColorsType";
 import { PaymentFormType } from "../types/PaymentFormType";
 import { ProductType } from "../types/ProductType";
+import { SizeType } from "../types/SizeType";
 
 type ContextType = {
     products: ProductType[]
@@ -11,6 +12,7 @@ type ContextType = {
     subcategories: SubcategoryType[]
     colors: ColorType[]
     paymentForms: PaymentFormType[]
+    sizes: SizeType[]
     loadingBootstrap: boolean
 }
 

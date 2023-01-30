@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import backendApi from '../services/backendApi';
 import { CategoryType } from '../types/CategoryType';
 import { ProductType } from '../types/ProductType';
+import { SizeType } from '../types/SizeType';
 
 export default function useBootstrap(){
 
@@ -15,6 +16,7 @@ export default function useBootstrap(){
     const [subcategories, setSubcategories] = useState<SubcategoryType[]>([])
     const [colors, setColors] = useState<ColorType[]>([])
     const [paymentForms, setPaymentForms] = useState<PaymentFormType[]>([])
+    const [sizes, setSizes] = useState<SizeType[]>([])
 
     async function getProducts(){
         try {
@@ -61,6 +63,15 @@ export default function useBootstrap(){
         }
     }
 
+    async function getTypes(){
+        try {
+            const {data} = await backendApi.get<SizeType[]>('sizes/get')
+            setSizes(data)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
 
         setLoadingBootstrap(true)
@@ -70,7 +81,8 @@ export default function useBootstrap(){
             getCategories(),
             getSubcategories(),
             getColors(),
-            getPaymentForms()
+            getPaymentForms(),
+            getTypes()
         ]
 
         Promise.all(arrPromises).then(() => {
@@ -78,5 +90,5 @@ export default function useBootstrap(){
         })
     }, [])
 
-    return {loadingBootstrap, products, categories, subcategories, colors, paymentForms}
+    return {loadingBootstrap, products, categories, subcategories, colors, paymentForms, sizes}
 }
