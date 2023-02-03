@@ -2,9 +2,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from "./views/Home";
-import Sale from "./views/Sale";
-import { mainColor } from "./configs/Colors";
-import Logout from "./views/Logout";
 import React, { useContext, useEffect } from "react";
 import { BootstrapContext } from "./contexts/BootstrapContext";
 import { LoadingContext } from "./contexts/LoadingContext";

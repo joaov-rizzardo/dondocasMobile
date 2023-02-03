@@ -1,22 +1,34 @@
-import { useEffect, useState } from "react"
-import { Text, View, StyleSheet, ScrollView} from "react-native"
+import { ReactNode, useEffect, useState } from "react"
+import { Text, View, StyleSheet, ScrollView, Modal} from "react-native"
 import ActionButton from "../components/ActionButton"
 import Balance from "../components/Balance"
 import HomeHeader from "../components/HomeHeader"
 import MovementRecord from "../components/MovementRecord"
+import ScreenModal from "../components/ScreenModal"
 import SpinnerScreenLoader from "../components/SpinnerScreenLoader"
 import { mainColor } from "../configs/Colors"
 import backendApi from "../services/backendApi"
-import { getCurrentMonth, getCurrentMonthDateRange, getCurrentYear } from "../utils/DateFunction"
+import { MovementType } from "../types/MovementType"
+import { formatDateToBR, getCurrentMonth, getCurrentMonthDateRange, getCurrentYear } from "../utils/DateFunction"
 
 export default () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [earnings, setEarning] = useState<number>(0)
     const [spendings, setSpendings] = useState<number>(0)
+    const [lastMovements, setLastMovements] = useState<MovementType[]>([])
+    const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const [modalContent, setModalContent] = useState<ReactNode | null>(null)
     
+    function showModal(){
+        setModalVisible(true)
+    }
+
+    function hideModal(){
+        setModalVisible(false)
+    }
     useEffect(() => {
         setIsLoading(true)
-        Promise.all([getEarnings(), getSpendings()]).then(() => setIsLoading(false))
+        Promise.all([getEarnings(), getSpendings(), getLastMovements()]).then(() => setIsLoading(false))
     }, [])
 
     const getEarnings = async () => {
@@ -40,8 +52,20 @@ export default () => {
         }
     }
 
+    const getLastMovements = async () => {
+        try {
+            const {data} = await backendApi.get<MovementType[]>('movement/lastMovements')
+            setLastMovements(data)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     return (
         <View style={styles.container}>
+            <ScreenModal visible={modalVisible} closeFunction={hideModal} icon="close">
+                {modalContent}
+            </ScreenModal>
             <HomeHeader />
             <View style={styles.action}>
                 <ScrollView 
@@ -49,7 +73,7 @@ export default () => {
                     horizontal={true} 
                     showsHorizontalScrollIndicator={false} 
                 >
-                    <ActionButton icon="attach-money" text="Vendas" />
+                    <ActionButton icon="attach-money" text="Vendas" pressFunction={showModal}/>
                     <ActionButton icon="shopping-cart" text="Despesas" />
                     <ActionButton icon="shopping-basket" text="Produtos" />
                     <ActionButton icon="business-center" text="Fornecedor" />
@@ -65,9 +89,15 @@ export default () => {
                             <Text style={{fontSize: 20, color: mainColor}}>Ultimas Movimentações:</Text>
                     </View>
 
-                    <MovementRecord type="E" date="28/01/2023 20:15:47" typeDescription="Venda" value={23.52}/>
-                    <MovementRecord type="S" date="28/01/2023 21:15:47" typeDescription="Compra" value={45.93}/>
-                    <MovementRecord type="S" date="28/01/2023 19:15:47" typeDescription="Compra" value={97.34}/>
+                    {lastMovements.map((movement, index) => (
+                        <MovementRecord 
+                            key={index} 
+                            type={movement.movementDirection} 
+                            date={formatDateToBR(movement.date)} 
+                            typeDescription={movement.typeDescription} 
+                            value={movement.value}/>
+                    ))}
+                    
                 </ScrollView>
             </SpinnerScreenLoader>
 
