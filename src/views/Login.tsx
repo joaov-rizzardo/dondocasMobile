@@ -36,7 +36,7 @@ export default () => {
 
                 <IconInput
                     value={login.username}
-                    changeFunction={text => setLogin({...login, username: text})}
+                    onChangeText={text => setLogin({...login, username: text})}
                     color={mainColor} 
                     icon="user" 
                     placeholder="Usuário" 
@@ -45,7 +45,7 @@ export default () => {
                 
                 <IconInput
                     value={login.password}
-                    changeFunction={text => setLogin({...login, password: text})}
+                    onChangeText={text => setLogin({...login, password: text})}
                     color={mainColor} 
                     icon="lock" 
                     placeholder="Senha" 
@@ -59,7 +59,7 @@ export default () => {
                     backgroundColor={mainColor}
                     width="75%"
                     isLoading={isLoading}
-                    pressFunction={e => {
+                    onPress={e => {
                         setIsLoading(true)
                         handleLogin(login.username, login.password).then(status => {
                             status === false ? handleHasError(true) : false

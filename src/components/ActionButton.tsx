@@ -1,21 +1,20 @@
-import { GestureResponderEvent, View, Text} from "react-native"
+import { GestureResponderEvent, View, Text, TouchableOpacityProps} from "react-native"
 import { mainColor } from "../configs/Colors"
 import IconButton from "./IconButton"
 
-interface Props {
+type Props = TouchableOpacityProps & {
     icon: string
     text: string
-    pressFunction?: ((event: GestureResponderEvent) => void)
 }
 
-export default ({icon, text, pressFunction}: Props) => (
+export default ({icon, text, ...props}: Props) => (
     <View style={{alignItems: "center", marginRight: 20, width: 75}}>
         <IconButton
             size={60}
             iconColor={mainColor}
             icon={icon}
             backgroundColor="#ece7e7"
-            pressFunction={pressFunction}
+            {...props}
         />
         <Text>{text}</Text>
     </View>

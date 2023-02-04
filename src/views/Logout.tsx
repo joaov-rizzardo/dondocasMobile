@@ -6,8 +6,9 @@ import { AuthContext } from "../contexts/AuthContext"
 export default () => {
 
     const {handleLogout} = useContext(AuthContext)
+    
     return (
-        <View style={styles.container}>
+        <View>
             <Text>Tem certeza que deseja sair?</Text>
             <View style={styles.buttonsContainer}>
                 <View style={styles.button}>

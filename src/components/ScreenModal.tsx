@@ -17,15 +17,15 @@ export default ({children, visible, closeFunction, icon}: Props) => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <IconButton 
-                        size={60} 
+                        size={50} 
                         icon={icon} 
                         iconColor="#000" 
                         backgroundColor="transparent"
-                        pressFunction={closeFunction}
+                        onPress={closeFunction}
                     />
                 </View>
 
-                <View>
+                <View style={{padding: 16}}>
                     {children}
                 </View>
             </View>

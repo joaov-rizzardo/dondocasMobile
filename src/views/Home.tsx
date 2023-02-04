@@ -1,5 +1,5 @@
-import { ReactNode, useEffect, useState } from "react"
-import { Text, View, StyleSheet, ScrollView, Modal} from "react-native"
+import React, { ReactNode, useEffect, useState } from "react"
+import { Text, View, StyleSheet, ScrollView} from "react-native"
 import ActionButton from "../components/ActionButton"
 import Balance from "../components/Balance"
 import HomeHeader from "../components/HomeHeader"
@@ -10,6 +10,7 @@ import { mainColor } from "../configs/Colors"
 import backendApi from "../services/backendApi"
 import { MovementType } from "../types/MovementType"
 import { formatDateToBR, getCurrentMonth, getCurrentMonthDateRange, getCurrentYear } from "../utils/DateFunction"
+import Sale from './Sale'
 
 export default () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -19,13 +20,16 @@ export default () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [modalContent, setModalContent] = useState<ReactNode | null>(null)
     
-    function showModal(){
+    function showModal(content: ReactNode){
+        setModalContent(content)
         setModalVisible(true)
     }
 
     function hideModal(){
+        setModalContent(null)
         setModalVisible(false)
     }
+
     useEffect(() => {
         setIsLoading(true)
         Promise.all([getEarnings(), getSpendings(), getLastMovements()]).then(() => setIsLoading(false))
@@ -60,7 +64,6 @@ export default () => {
             console.log(error)
         }
     }
-
     return (
         <View style={styles.container}>
             <ScreenModal visible={modalVisible} closeFunction={hideModal} icon="close">
@@ -73,7 +76,7 @@ export default () => {
                     horizontal={true} 
                     showsHorizontalScrollIndicator={false} 
                 >
-                    <ActionButton icon="attach-money" text="Vendas" pressFunction={showModal}/>
+                    <ActionButton icon="attach-money" text="Venda" onPress={() => showModal(<Sale />)}/>
                     <ActionButton icon="shopping-cart" text="Despesas" />
                     <ActionButton icon="shopping-basket" text="Produtos" />
                     <ActionButton icon="business-center" text="Fornecedor" />

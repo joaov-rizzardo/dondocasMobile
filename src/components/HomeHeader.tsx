@@ -17,7 +17,7 @@ export default () => {
                     icon="logout" 
                     iconColor="#FFF" 
                     backgroundColor="transparent"
-                    pressFunction={() => handleLogout()}
+                    onPress={() => handleLogout()}
                 />
             </View>
 

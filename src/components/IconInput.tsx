@@ -1,27 +1,17 @@
-import { StyleSheet, TextInput, View } from "react-native"
+import { StyleSheet, TextInput, TextInputProps, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome"
 
-type IconInputType  = {
+type IconInputType  = TextInputProps & {
     color: string
     icon: string
-    placeholder?: string
     width: string
-    value?: string
-    secureTextEntry?: boolean
-    changeFunction?: ((text: string) => void)
 }
 
-export default ({color, icon, placeholder, width, value, changeFunction, secureTextEntry}: IconInputType) => {
+export default ({color, icon, width, ...props}: IconInputType) => {
     return (
         <View style={{width: width, borderColor: color, ...styles.container}}>
             <Icon name={icon} color={color} size={20} />
-            <TextInput 
-                placeholder={placeholder}
-                value={value}
-                onChangeText={changeFunction}
-                secureTextEntry={secureTextEntry} 
-                style={styles.input}
-            />
+            <TextInput style={styles.input} {...props}/>
         </View>
     )
 }

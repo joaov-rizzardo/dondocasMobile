@@ -1,22 +1,18 @@
-import { GestureResponderEvent, TouchableOpacity, View, StyleSheet, Text, ActivityIndicator} from "react-native"
+import { GestureResponderEvent, TouchableOpacity, View, StyleSheet, Text, ActivityIndicator, TouchableOpacityProps} from "react-native"
 
-type LoadingButtonType = {
+type LoadingButtonType = TouchableOpacityProps & {
     isLoading: boolean
     text: string
     backgroundColor: string
     fontColor: string
-    pressFunction?: ((event: GestureResponderEvent) => void)
     width: string | number
 }
 
-export default ({width, backgroundColor, fontColor, text, isLoading, pressFunction}:LoadingButtonType) => {
+export default ({width, backgroundColor, fontColor, text, isLoading, ...props}:LoadingButtonType) => {
     return (
         <View style={{width, backgroundColor, ...styles.button}}>
         {isLoading === true ? <ActivityIndicator size="small" color={fontColor}/> : (
-            <TouchableOpacity  
-                onPress={pressFunction}
-                style={styles.button}
-            >
+            <TouchableOpacity  style={styles.button} {...props}>
                 <Text style={{color: fontColor}}>{text}</Text>
             </TouchableOpacity>
         )}
