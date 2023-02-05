@@ -35,5 +35,4 @@ export function formatDateToBR(date: string): string{
         console.log(error)
         return date
     }
-
 }

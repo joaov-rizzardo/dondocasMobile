@@ -25,7 +25,7 @@ export default ({children, visible, closeFunction, icon}: Props) => {
                     />
                 </View>
 
-                <View style={{padding: 16}}>
+                <View>
                     {children}
                 </View>
             </View>

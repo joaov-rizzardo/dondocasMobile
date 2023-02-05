@@ -1,22 +1,26 @@
 import { useState } from "react"
-import { TouchableOpacity, View, Text, Modal, StyleSheet, ScrollView} from "react-native"
+import { TouchableOpacity, View, Text, Modal, StyleSheet, ScrollView, StyleProp, TextStyle} from "react-native"
 import Icon  from "react-native-vector-icons/MaterialIcons"
 import { mainColor } from "../configs/Colors"
 import IconButton from "./IconButton"
+import IconInput from "./IconInput"
 
 type OptionType = {
     label: string
     value: any
 }
+
 interface Props {
     value: any
     options: OptionType[]
     onChange: (text: any) => void
     title?: string
+    customStyles?: StyleProp<TextStyle>
 }
-export default ({value, options, onChange, title}: Props) => {
+export default ({value, options, onChange, title, customStyles}: Props) => {
 
     const [openedPicker, setOpenedPicker] = useState<boolean>(false)
+    const [searchedValue, setSearchedValue] = useState<string>('')
 
     function toggleModal(){
         setOpenedPicker(prevState => !prevState)
@@ -27,7 +31,7 @@ export default ({value, options, onChange, title}: Props) => {
     return (
         <View>
 
-           <TouchableOpacity style={defaultStyle.picker} onPress={toggleModal}>
+           <TouchableOpacity style={[defaultStyle.picker, customStyles]} onPress={toggleModal}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                     <Text>{selectedOption!.label}</Text>
                     <Icon name="expand-more" color="#00" size={20} />
@@ -52,8 +56,27 @@ export default ({value, options, onChange, title}: Props) => {
                         onPress={toggleModal}
                     />
                 </View>
+                <View style={{justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10}}>
+                    <IconInput 
+                        color={mainColor} 
+                        icon="search" 
+                        width="100%" 
+                        value={searchedValue}
+                        onChangeText={text => setSearchedValue(text)}
+                    />
+                </View>
+                
                 <ScrollView>
-                    {options.map((option, index) => (
+                    {options.filter(option => {
+                        if(searchedValue === ''){
+                            return true
+                        }
+
+                        if(option.label.toLowerCase().includes(searchedValue.toLowerCase())){
+                            return true
+                        }
+                        
+                    }).map((option, index) => (
                         <TouchableOpacity
                             key={index}
                             style={defaultStyle.optionContainer}
@@ -70,8 +93,6 @@ export default ({value, options, onChange, title}: Props) => {
                     ))}
                 </ScrollView>
             </View>
-
-            
            </Modal>
         </View>
     )

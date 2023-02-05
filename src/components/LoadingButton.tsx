@@ -2,7 +2,7 @@ import { GestureResponderEvent, TouchableOpacity, View, StyleSheet, Text, Activi
 
 type LoadingButtonType = TouchableOpacityProps & {
     isLoading: boolean
-    text: string
+    text?: string
     backgroundColor: string
     fontColor: string
     width: string | number
