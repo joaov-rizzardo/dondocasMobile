@@ -1,11 +1,13 @@
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { useContext, useState } from "react";
 import { Text, View, StyleSheet, Switch, ScrollView} from "react-native";
+import { TouchableOpacity } from "react-native";
+import Icon  from "react-native-vector-icons/MaterialIcons";
 import CustomDatePicker from "../components/CustomDatePicker";
 import IconLoadingButton from "../components/IconLoadingButton";
 import LabelInput from "../components/LabelInput";
-import LoadingButton from "../components/LoadingButton";
 import OptionPicker from "../components/OptionPicker";
+import ProductList from "../components/ProductList";
 import { mainColor } from "../configs/Colors";
 import { BootstrapContext } from "../contexts/BootstrapContext";
 
@@ -71,9 +73,35 @@ export default () => {
                         }}
                     />
                 </View>
+
+                <View style={{marginTop: 10}}>
+                    <Text style={{...styles.title, marginRight: 20}}>Produtos:</Text>
+                    <TouchableOpacity 
+                        style={styles.productButton}
+                    >
+                        <Text style={{color: '#fff', marginRight: 10}}>Adicionar produto</Text>
+                        <Icon name="add-shopping-cart" color="#fff" size={25}/>
+                    </TouchableOpacity>
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+                    <ProductList />
+
+                    <ProductList />
+                </View>
             </ScrollView>
 
             <View style={styles.footer}>
+                <View style={styles.total}>
+                    <Text style={{color: mainColor, fontSize: 15, fontWeight: 'bold'}}>R$ 1580,50</Text>
+                </View>
                 <IconLoadingButton 
                     isLoading={false}
                     icon="check"
@@ -98,7 +126,32 @@ const styles = StyleSheet.create({
     },
     footer: {
         position: 'absolute',
+        width: '100%',
         bottom: 50,
-        right: 20    
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginLeft: 10,
+        flexDirection: 'row'
+    },
+    total: {
+        backgroundColor: '#fff',
+        borderWidth: 2,
+        borderColor: mainColor,
+        height: 40, 
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '50%'
+    },
+    productButton: {
+        width: '100%', 
+        height: 40, 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: mainColor,
+        paddingHorizontal: 10,
+        borderRadius: 20,
+        marginBottom: 10
     }
 })
