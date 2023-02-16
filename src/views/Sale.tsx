@@ -100,7 +100,7 @@ export default () => {
 
             <View style={styles.footer}>
                 <View style={styles.total}>
-                    <Text style={{color: mainColor, fontSize: 15, fontWeight: 'bold'}}>R$ 1580,50</Text>
+                    <Text style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>R$ 1580,50</Text>
                 </View>
                 <IconLoadingButton 
                     isLoading={false}
@@ -134,9 +134,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     total: {
-        backgroundColor: '#fff',
-        borderWidth: 2,
-        borderColor: mainColor,
+        backgroundColor: mainColor,
         height: 40, 
         borderRadius: 20,
         justifyContent: 'center',

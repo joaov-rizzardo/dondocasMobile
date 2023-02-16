@@ -10,7 +10,7 @@ export default () => {
             </View>
             
             <View>
-                <Text style={{fontWeight: 'bold'}}>Sandália salto bloco</Text>
+                <Text>Sandália salto bloco</Text>
                 <Text>Verde</Text>
                 <Text>37</Text>
                 <Text>1 unidade(s)</Text>
